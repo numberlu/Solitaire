@@ -8,8 +8,6 @@ NAME: Rendering start board
     -> Using the class "Point" to use the x and y coordinates to position the cards and such.
     -> Using the image class from Swing to set the image on every face up cards on the board (Cards will be stored in a separate file)
 
-XYZ
-
 NAME: Stacking cards on the foundations
     DEMO: 
     -> If foundation stack is empty, only allow ACE cards to be stacked, taken from tableau
