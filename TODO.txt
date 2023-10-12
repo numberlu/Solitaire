@@ -1,6 +1,6 @@
 Start:
-In Solitaire class we'll launch the window for solitaire (green) w/ foundation place and we'll go to the
-Stack class to get a shuffeled deck of cards (use Random (0 to 52) or Collections.shuffle).
+In Solitaire class we'll launch the window for solitaire (green) w/ a place for foundations and we'll go to the
+Stack class to get a deck of cards and then shuffles them (use Random (0 to 52) or Collections.shuffle).
 Before this the cards will be initiated as in we need to get 52 cards from the Card class and put it into an ArrayList (somehow :p). 
 The deck will then be placed on the tableau and stock. 
   Tableau: 
