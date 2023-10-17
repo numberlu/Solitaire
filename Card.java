@@ -19,7 +19,6 @@ class Card {
     public void setIsFaceUp(boolean isFaceUp) {
         this.isFaceUp = isFaceUp;
     }
-    // asdasd
 
     public boolean getIsFaceUp() {
         return isFaceUp;
@@ -33,8 +32,8 @@ class Card {
         ImageIcon fDownCard = new ImageIcon("cards\\fpBase0" + number + ".gif");
         return fDownCard;
     }
-
-    void method() {
-
+    public ImageIcon getCardBottom() {
+        ImageIcon fBottomCard = new ImageIcon("cards\\bottom01.gif");
+        return fBottomCard;
     }
 }

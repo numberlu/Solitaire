@@ -24,7 +24,7 @@ class LaunchPage {
     LaunchPage() {
        
         deck.setBackground(backgroundColor);
-        deck.setBounds(0, 0, 315, 150);
+        deck.setBounds(0, 0, 325, 150);
         deck.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 20));
 
         deck.add(stock);
@@ -34,7 +34,7 @@ class LaunchPage {
         // Window setup
         JFrame frame = new JFrame();
         frame.setTitle("Solitaire");
-        frame.setSize(825, 700);
+        frame.setSize(850, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
@@ -45,9 +45,10 @@ class LaunchPage {
 
 
         // Adding stacks
+        frame.add(tableau);
         frame.add(foundations);
         frame.add(deck);
-        frame.add(tableau);
+        
 
         // Window icon set up
         ImageIcon image = new ImageIcon("cards\\playing-cards.png");

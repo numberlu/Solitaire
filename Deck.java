@@ -4,6 +4,9 @@ import java.awt.LayoutManager;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
+/**.
+ * Stock and Waste
+ */
 class Deck extends Stack {
 
     public Color backgroundColor = new Color(14, 120, 71);
