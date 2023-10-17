@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -25,10 +26,12 @@ class LaunchPage {
         .getImage().getScaledInstance(73, 97, Image.SCALE_SMOOTH));
 
     JLabel back = new JLabel(cardBack);
+    //JButton start = new JButton("Start New Game");
 
     LaunchPage() {
         tableau.setBackground(backgroundColor);
         tableau.setBounds(0, 150, 825, 550);
+        //start.setBounds(400, 350, 100, 60);
         
         deck.setBackground(backgroundColor);
         deck.setBounds(0, 0, 315, 150);
@@ -45,7 +48,12 @@ class LaunchPage {
         foundations.add(labelClubs);
         foundations.add(labelDiamonds);
         
+        Stack stack = new Stack();
+        stack.createShuffledCardStack();
+        //JLabel test = new JLabel(stack.pop());
+        deck.add(test);
         deck.add(back);
+        //tableau.add(start);
         
         JFrame frame = new JFrame();
         frame.setTitle("Solitaire");
@@ -55,8 +63,11 @@ class LaunchPage {
         frame.add(foundations);
         frame.add(deck);
         frame.add(tableau);
-        
+        //frame.add(start);
+
         ImageIcon image = new ImageIcon("cards\\playing-cards.png");
         frame.setIconImage(image.getImage());
+
+        //stack.pop();
     }
 }
