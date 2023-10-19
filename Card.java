@@ -43,4 +43,9 @@ class Card {
         ImageIcon fDownCard = new ImageIcon("cards\\fpBase0" + number + ".gif");
         return fDownCard;
     }
+
+    public ImageIcon getCardBottom() {
+        ImageIcon fBottomCard = new ImageIcon("cards\\bottom01.gif");
+        return fBottomCard;
+    }
 }
