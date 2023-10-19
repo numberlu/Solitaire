@@ -8,10 +8,10 @@ import javax.swing.JPanel;
 public class Foundations extends JPanel{
     
     public Color backgroundColor = new Color(14, 120, 71);
-    public static Card card;
+    public Card card;
 
     public Foundations() {
-        card = new Card(0, 'x');
+        card = new Card();
 
         // Settings for foundations
         this.setBackground(backgroundColor);
@@ -19,11 +19,12 @@ public class Foundations extends JPanel{
         this.setLayout((LayoutManager) new FlowLayout(FlowLayout.CENTER, 20, 20));
         this.initializeFoundation();
     }
+
     void initializeFoundation() {
 
         for (int i = 1; i < 5; i++) {
             card.number = i;
-            ImageIcon fdCard = card.getFaceDown();
+            ImageIcon fdCard = card.getFoundations();
             JLabel labelCard = new JLabel(fdCard);
             this.add(labelCard);
         }

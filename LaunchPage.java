@@ -1,57 +1,88 @@
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.event.MouseInputListener;
 
-class LaunchPage {
+class LaunchPage extends JFrame implements MouseInputListener{
     public Color backgroundColor = new Color(14, 120, 71);
 
     // Creating objects
     public Tableau tableau = new Tableau(); // Changed JPanel to Tableau
-    public JPanel deck = new JPanel();
-    public Stock stock = new Stock();
+    public Deck deck = new Deck();
     public Foundations foundations = new Foundations();
-
-    ImageIcon cardBack = new ImageIcon(new ImageIcon("cards\\card back black.png")
-         .getImage().getScaledInstance(73, 97, Image.SCALE_SMOOTH));
-
-    JLabel back = new JLabel(cardBack);
+    public Waste waste;
 
     LaunchPage() {
-       
-        deck.setBackground(backgroundColor);
-        deck.setBounds(0, 0, 315, 150);
-        deck.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 20));
-
-        deck.add(stock);
-                
-        deck.add(back);
-        
         // Window setup
-        JFrame frame = new JFrame();
-        frame.setTitle("Solitaire");
-        frame.setSize(825, 700);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        this.setTitle("Solitaire");
+        this.setSize(825, 700);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
 
         // Does not allow change of window size
-        frame.setResizable(false); 
+        this.setResizable(false); 
         // Sets window to middle of screen
-        frame.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
 
 
-        // Adding stacks
-        frame.add(foundations);
-        frame.add(deck);
-        frame.add(tableau);
+        // Adding components of the board
+        this.add(foundations);
+        this.add(deck);
+        this.add(tableau);
 
         // Window icon set up
-        ImageIcon image = new ImageIcon("cards\\playing-cards.png");
-        frame.setIconImage(image.getImage());
+        ImageIcon image = new ImageIcon("cards\\poker-cards.png");
+        this.setIconImage(image.getImage());
         
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getSource() == deck) {  //TODO no idea how to reach waste from here lol
+            waste.addCardToWaste();
+        }
+
+        //IDK how this method works
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseDragged'");
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseMoved'");
     }
 }
