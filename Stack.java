@@ -23,8 +23,13 @@ class Stack {
     /**
      * Calls a method that creates an ArrayList of playing cards and shuffles it.
      */
-    void createShuffledCardStack() {
+    public void createShuffledCardStack() {
         createCardStack();
         Collections.shuffle(this.cardStack);
+    }
+
+    public void popCard() {
+        // Removes the last element in the Array list
+        cardStack.remove(cardStack.size() - 1);
     }
 }

@@ -12,15 +12,17 @@ class LaunchPage extends JFrame implements MouseInputListener{
     public Color backgroundColor = new Color(14, 120, 71);
 
     // Creating objects
-    public Tableau tableau = new Tableau(); // Changed JPanel to Tableau
-    public Deck deck = new Deck();
-    public Foundations foundations = new Foundations();
+    public Card cards = new Card();
+
+    public Tableau tableau = new Tableau(cards.cardStack); // Changed JPanel to Tableau
+    public Deck deck = new Deck(cards.cardStack);
+    public Foundations foundations = new Foundations(cards.cardStack);
     public Waste waste;
 
     LaunchPage() {
         // Window setup
         this.setTitle("Solitaire");
-        this.setSize(825, 700);
+        this.setSize(810, 700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
 
@@ -31,9 +33,9 @@ class LaunchPage extends JFrame implements MouseInputListener{
 
 
         // Adding components of the board
+        this.add(tableau);
         this.add(foundations);
         this.add(deck);
-        this.add(tableau);
 
         // Window icon set up
         ImageIcon image = new ImageIcon("cards\\poker-cards.png");

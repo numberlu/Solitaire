@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -9,13 +10,16 @@ import javax.swing.JPanel;
 class Tableau extends JPanel {
     public Color backgroundColor = new Color(14, 120, 71);
     public Card card = new Card();
-    Stack stack = new Stack();
+    ArrayList<Card> tabCard;
 
     // Tableau stack
-    public Tableau() {
+    public Tableau(ArrayList<Card> cards) {
+
+        ArrayList<Card> tabCard = cards;
+
         this.setBackground(backgroundColor);
-        this.setBounds(0, 150, 825, 550);
-        this.setLayout((LayoutManager) new FlowLayout(FlowLayout.LEADING, 55, 30));
+        this.setBounds(0, 150, 810, 550);
+        this.setLayout((LayoutManager) new FlowLayout(FlowLayout.LEADING, 35, 30));
         this.initializeTableauBottom();
         this.initializeTableuStack();
 
@@ -30,15 +34,28 @@ class Tableau extends JPanel {
     }
 
     void initializeTableuStack() {
-        stack.createShuffledCardStack();
+        card.createShuffledCardStack();
 
+        // // Column loop
         // for (int i = 0; i < 7; i++) {
+        //     // Row loop (number of cards on stack)
         //     for (int j = 0; j < 7; j++) {
+                
         //         if (i > j) {
-        //             card.placeFaceDown(i, j); //pseudo code
+        //             // THE IDEA:
+        //             // First, get the card from gettCardBottom, the  follow the
+        //             // initializeTableauBottom  method to get card image, then set the bounds,
+        //             // and do flowLayout. Dont forget to make an arraylist varible for each tableau 
+        //             // stack
+
+                    
+        //             card.getCardBottom(); //pseudo code
+        //             // Removing last element
+        //             tabCard.remove(tabCard.size() - 1);
+
         //             card.isFaceUp = false;
         //         } else if (i == j) {
-        //             card.placeFaceUp(i, j);
+        //             tabCard.placeFaceUp(i, j, tabCard);
         //             card.isFaceUp = true;
         //         }
         //     }
