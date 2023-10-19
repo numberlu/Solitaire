@@ -1,25 +1,30 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.swing.ImageIcon;
-
 class Stack {
+    public ArrayList<Card> cardStack = new ArrayList<>();
 
-    public ArrayList<Card> stack;
-
-    public ArrayList<Card> createShuffledCardStack() {
-        stack = new ArrayList<>();
+    /**
+     * Creates an ArrayList (a stack) of playing cards.
+     */
+    public void createCardStack() {
         for (int i = 1; i <= 13; i++) {
             Card cardS = new Card(i, 's');
-            stack.add(cardS);
+            this.cardStack.add(cardS);
             Card cardC = new Card(i, 'c');
-            stack.add(cardC);
+            this.cardStack.add(cardC);
             Card cardH = new Card(i, 'h');
-            stack.add(cardH);
+            this.cardStack.add(cardH);
             Card cardD = new Card(i, 'd');
-            stack.add(cardD);
+            this.cardStack.add(cardD);
         }
-        Collections.shuffle(stack);
-        return stack;
+    }
+
+    /**
+     * Calls a method that creates an ArrayList of playing cards and shuffles it.
+     */
+    void createShuffledCardStack() {
+        createCardStack();
+        Collections.shuffle(this.cardStack);
     }
 }
