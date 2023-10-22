@@ -12,7 +12,7 @@ public class Foundations extends JPanel{
     public Color backgroundColor = new Color(14, 120, 71);
     public Card card;
 
-    public Foundations(ArrayList<Card> cards) {
+    public Foundations() {
         card = new Card();
 
         // Settings for foundations

@@ -3,6 +3,8 @@ import java.util.Collections;
 
 class Stack {
     public ArrayList<Card> cardStack = new ArrayList<>();
+    public ArrayList<Card> tabStack = new ArrayList<>();
+    public ArrayList<Card> deckStack = new ArrayList<>();
 
     /**
      * Creates an ArrayList (a stack) of playing cards.
@@ -26,6 +28,16 @@ class Stack {
     public void createShuffledCardStack() {
         createCardStack();
         Collections.shuffle(this.cardStack);
+
+        // Stack for tableau
+        for (int i = 0; i < 28; i++) {
+            this.tabStack.add(this.cardStack.get(i));
+        }
+
+        // Stack for deck
+        for (int j = 28; j < this.cardStack.size(); j++) {
+            this.deckStack.add(this.cardStack.get(j));
+        }
     }
 
     public void popCard() {

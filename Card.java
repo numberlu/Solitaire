@@ -1,4 +1,5 @@
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
@@ -53,14 +54,16 @@ class Card extends Stack {
         return fBottomCard;
     }
 
-    public void getFaceUp() {
+    public ImageIcon getFaceUp() {
         // Multiple vertical distance with lastCardNum to get pos of card and put it in col
-        
-        
+        ImageIcon fUpCard = new ImageIcon(this.directory);
+        return fUpCard;
 
     }
     
-    public void getFaceDown(int col, int currentCardNum, Card cardList) {
-        
+    public ImageIcon getFaceDown() {
+        ImageIcon fDownCard = new ImageIcon(new ImageIcon("cards\\card back black.png")
+         .getImage().getScaledInstance(73, 97, Image.SCALE_SMOOTH));
+        return fDownCard;
     }
 }

@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,14 +14,21 @@ class LaunchPage extends JFrame implements MouseInputListener{
     public Color backgroundColor = new Color(14, 120, 71);
 
     // Creating objects
+    // Cards already shuffled
     public Card cards = new Card();
 
-    public Tableau tableau = new Tableau(cards.cardStack); // Changed JPanel to Tableau
-    public Deck deck = new Deck(cards.cardStack);
-    public Foundations foundations = new Foundations(cards.cardStack);
+    public Tableau tableau = new Tableau(cards.tabStack); // Changed JPanel to Tableau
+    public Deck deck = new Deck(cards.deckStack);
+
+    public Foundations foundations = new Foundations();
     public Waste waste;
 
     LaunchPage() {
+        // Adding components of the board to the frame
+        this.add(tableau);
+        this.add(foundations);
+        this.add(deck);
+
         // Window setup
         this.setTitle("Solitaire");
         this.setSize(810, 700);
@@ -30,12 +39,6 @@ class LaunchPage extends JFrame implements MouseInputListener{
         this.setResizable(false); 
         // Sets window to middle of screen
         this.setLocationRelativeTo(null);
-
-
-        // Adding components of the board
-        this.add(tableau);
-        this.add(foundations);
-        this.add(deck);
 
         // Window icon set up
         ImageIcon image = new ImageIcon("cards\\poker-cards.png");
