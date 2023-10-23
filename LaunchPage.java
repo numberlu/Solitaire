@@ -7,27 +7,40 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
 class LaunchPage extends JFrame implements MouseInputListener{
-    public Color backgroundColor = new Color(14, 120, 71);
+    public Color backgroundColor = new Color(21, 88, 67);
 
     // Creating objects
     // Cards already shuffled
     public Card cards = new Card();
 
-    public Tableau tableau = new Tableau(cards.tabStack); // Changed JPanel to Tableau
+    // Tableau and deck take arguments of shuffled cards respectively
+    public Tableau tableau = new Tableau(cards.tabStack);
     public Deck deck = new Deck(cards.deckStack);
 
     public Foundations foundations = new Foundations();
     public Waste waste;
+    // JlayeredPane for tableau, foundation, deck and waste
+    public JLayeredPane layeredPane = new JLayeredPane();
+
 
     LaunchPage() {
         // Adding components of the board to the frame
-        this.add(tableau);
-        this.add(foundations);
-        this.add(deck);
+
+        layeredPane.setBounds(0, 0, 810, 700);
+        
+        // Adding the classes into JlayeredPane so that can overlap each other
+        layeredPane.add(tableau);
+        layeredPane.add(foundations);
+        layeredPane.add(deck);
+
+        // Adding JLayeredPane into JFrame
+        this.add(layeredPane);
+
 
         // Window setup
         this.setTitle("Solitaire");
