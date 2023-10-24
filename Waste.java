@@ -1,28 +1,47 @@
 import java.awt.Color;
-
+import java.awt.FlowLayout;
+import java.util.ArrayList;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
-public class Waste extends JLayeredPane{
-    int cardsInWaste;
-    int index;
-    Stack stack;
-    Waste() {
-        this.setBackground(Color.red);
-        this.setBounds(100, 0, 215, 150);
+public class Waste extends JPanel{
+    public Color backgroundColor = new Color(14, 120, 71);
+    Card cardInWaste;
+    JLabel card = new JLabel();
+    boolean isEmpty = true;
+    int index = 1;
+    ArrayList<Card> cards = new ArrayList<>();
+    Tableau tableau;
+    
+    Waste(ArrayList<Card> cards, Tableau tableau) {
+        this.tableau = tableau;
+        this.cards = cards;
+        this.add(card);
+        this.setBackground(backgroundColor);
+        this.setBounds(137, 0, 315 - 137, 150);
+        this.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 20));
     }
-
+    
+    /**
+     * Method checks if the waste is empty and adds a card.
+     */
     void addCardToWaste() {
-        System.out.println("Hello");
-        JLabel card1 = new JLabel(stack.cardStack.get(0).image);
-        this.add(card1);
+        System.out.println("hi");
+        //if the card was removed, we remove that card(index) and stack moves up by one card
+        if (isEmpty) { 
+            index--;
+        }
+        //makes sure that we can reuse the deck after we reach its end
+        if (index == cards.size()) {
+            index = 0;
+        }
+        cardInWaste = cards.get(index);
+        this.card.setIcon(cardInWaste.getFaceUp());
+        isEmpty = false;
+        index++;
     }
 
-    void returnCardToDeck() {
-
-    }
-
-    int getCardsInWaste() {
-        return cardsInWaste;
+    void removeCardFromWaste() {
+        this.isEmpty = true;
     }
 }
