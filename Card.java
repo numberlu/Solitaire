@@ -1,13 +1,23 @@
+import java.awt.FlowLayout;
+import java.awt.Image;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
-class Card {
+class Card extends Stack {
     public int number;
     public char symbol;
     public boolean isFaceUp;
     public String directory = "cards\\";
+
     ImageIcon image;
 
     Card() { 
+        this.createShuffledCardStack();
+        this.number = number;
+        this.symbol = symbol;
+        this.directory = directory + ((number < 10) ? "0" + number + symbol + ".gif" 
+            : number + symbol + ".gif");
+        this.image = new ImageIcon(directory);
     }
 
     /**
@@ -23,7 +33,7 @@ class Card {
         this.number = number;
         this.symbol = symbol;
         this.directory = directory + ((number < 10) ? "0" + number + symbol + ".gif" 
-            : number + symbol + ".gif");
+            : "" + number + symbol + ".gif");
         this.image = new ImageIcon(directory);
     }
 
@@ -47,5 +57,18 @@ class Card {
     public ImageIcon getCardBottom() {
         ImageIcon fBottomCard = new ImageIcon("cards\\bottom01.gif");
         return fBottomCard;
+    }
+
+    public ImageIcon getFaceUp() {
+        // Multiple vertical distance with lastCardNum to get pos of card and put it in col
+        ImageIcon fUpCard = new ImageIcon(this.directory);
+        return fUpCard;
+
+    }
+    
+    public ImageIcon getFaceDown() {
+        ImageIcon fDownCard = new ImageIcon(new ImageIcon("cards\\card back black.png")
+         .getImage().getScaledInstance(73, 97, Image.SCALE_SMOOTH));
+        return fDownCard;
     }
 }

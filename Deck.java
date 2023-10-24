@@ -17,12 +17,13 @@ class Deck extends JPanel {
          .getImage().getScaledInstance(73, 97, Image.SCALE_SMOOTH));
     JLabel back = new JLabel(cardBack);
 
-    public ArrayList<Card> playingCards = new ArrayList<>(); //gets the rest of the cards upon Tableau's initialization
+    //gets the rest of the cards upon Tableau's initialization
+    public ArrayList<Card> playingCards = new ArrayList<>(); 
 
     /**
      * Sets Deck's (JPanel's) interface.
      */
-    public Deck() {
+    public Deck(ArrayList<Card> cards) {
         this.setBackground(backgroundColor);
         this.setBounds(0, 0, 315, 150);
         this.setLayout((LayoutManager) new FlowLayout(FlowLayout.LEADING, 20, 20));

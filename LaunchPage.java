@@ -2,25 +2,49 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
 class LaunchPage extends JFrame implements MouseInputListener{
-    public Color backgroundColor = new Color(14, 120, 71);
+    public Color backgroundColor = new Color(21, 88, 67);
 
     // Creating objects
-    public Tableau tableau = new Tableau(); // Changed JPanel to Tableau
-    public Deck deck = new Deck();
+    // Cards already shuffled
+    public Card cards = new Card();
+
+    // Tableau and deck take arguments of shuffled cards respectively
+    public Tableau tableau = new Tableau(cards.tabStack);
+    public Deck deck = new Deck(cards.deckStack);
+
     public Foundations foundations = new Foundations();
     public Waste waste;
+    // JlayeredPane for tableau, foundation, deck and waste
+    public JLayeredPane layeredPane = new JLayeredPane();
+
 
     LaunchPage() {
+        // Adding components of the board to the frame
+
+        layeredPane.setBounds(0, 0, 810, 700);
+        
+        // Adding the classes into JlayeredPane so that can overlap each other
+        layeredPane.add(tableau);
+        layeredPane.add(foundations);
+        layeredPane.add(deck);
+
+        // Adding JLayeredPane into JFrame
+        this.add(layeredPane);
+
+
         // Window setup
         this.setTitle("Solitaire");
-        this.setSize(825, 700);
+        this.setSize(810, 700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
 
@@ -28,12 +52,6 @@ class LaunchPage extends JFrame implements MouseInputListener{
         this.setResizable(false); 
         // Sets window to middle of screen
         this.setLocationRelativeTo(null);
-
-
-        // Adding components of the board
-        this.add(foundations);
-        this.add(deck);
-        this.add(tableau);
 
         // Window icon set up
         ImageIcon image = new ImageIcon("cards\\poker-cards.png");
