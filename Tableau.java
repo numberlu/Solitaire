@@ -1,11 +1,5 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.LayoutManager;
-import java.awt.List;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -21,14 +15,17 @@ class Tableau extends JPanel {
     ArrayList<Card> shuffledCards;
 
     // All stacks of tableau will be in tabStacks
-    ArrayList<ArrayList<Card>> tabStacks = new ArrayList();
+    ArrayList<ArrayList<Card>> tabStacks = new ArrayList<>();
 
     // Inidividual column stack
-    ArrayList<Card> tabStack = new ArrayList();
+    ArrayList<Card> tabStack = new ArrayList<>();
       
 
 
-    // Tableau stack
+    /**
+     * Tableau board
+     * @param cards cards that are initialized on the board upon the start of the game.
+     */
     public Tableau(ArrayList<Card> cards) {
 
         // Shuffled cards (28 cards in total)
@@ -59,7 +56,7 @@ class Tableau extends JPanel {
         }
     }
 
-    /**.
+    /**
      * 
      * This will set the cards positions accordingly when first launching the game.
      * 
