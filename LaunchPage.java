@@ -1,14 +1,8 @@
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Image;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
 class LaunchPage extends JFrame implements MouseInputListener{

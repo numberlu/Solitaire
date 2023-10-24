@@ -3,10 +3,8 @@ import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 class Deck extends JPanel {

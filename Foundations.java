@@ -1,13 +1,14 @@
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
-import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Foundations extends JPanel{
+/**
+ * Class deals with initializing foundations and actions performed to or in them.
+ */
+public class Foundations extends JPanel {
     
     public Color backgroundColor = new Color(14, 120, 71);
     public Card card;

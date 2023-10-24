@@ -1,6 +1,4 @@
-import java.awt.FlowLayout;
 import java.awt.Image;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 class Card extends Stack {
@@ -13,11 +11,9 @@ class Card extends Stack {
 
     Card() { 
         this.createShuffledCardStack();
-        this.number = number;
-        this.symbol = symbol;
-        this.directory = directory + ((number < 10) ? "0" + number + symbol + ".gif" 
-            : "" + number + symbol + ".gif");
-        this.image = new ImageIcon(directory);
+        // this.directory = directory + ((number < 10) ? "0" + number + symbol + ".gif" 
+        //     : "" + number + symbol + ".gif");
+        // this.image = new ImageIcon(directory);
     }
 
     /**
@@ -72,7 +68,7 @@ class Card extends Stack {
     
     public ImageIcon getFaceDown() {
         ImageIcon fDownCard = new ImageIcon(new ImageIcon("cards\\card back black.png")
-         .getImage().getScaledInstance(73, 97, Image.SCALE_SMOOTH));
+            .getImage().getScaledInstance(73, 97, Image.SCALE_SMOOTH));
         return fDownCard;
-    }
+    }   
 }
