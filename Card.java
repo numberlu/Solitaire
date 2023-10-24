@@ -16,7 +16,7 @@ class Card extends Stack {
         this.number = number;
         this.symbol = symbol;
         this.directory = directory + ((number < 10) ? "0" + number + symbol + ".gif" 
-            : number + symbol + ".gif");
+            : "" + number + symbol + ".gif");
         this.image = new ImageIcon(directory);
     }
 
@@ -35,6 +35,10 @@ class Card extends Stack {
         this.directory = directory + ((number < 10) ? "0" + number + symbol + ".gif" 
             : "" + number + symbol + ".gif");
         this.image = new ImageIcon(directory);
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public void setIsFaceUp(boolean isFaceUp) {
