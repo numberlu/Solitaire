@@ -47,10 +47,12 @@ public class Waste extends JPanel{
      * For now, moving to foundations and doing nothing is realized.
      */
     void removeCardFromWaste() {
-        if (foundations.addCardToFoundation(cardInWaste)) {
-            this.card.setIcon(cardInWaste.getCardBottom());
-            this.cards.remove(cardInWaste);
-            this.isEmpty = true;
+        if (!foundations.addCardToFoundation(cardInWaste) 
+                && !tableau.addCardToTableau(cardInWaste)) {
+            return;
         }
+        this.card.setIcon(cardInWaste.getCardBottom());
+        this.cards.remove(cardInWaste);
+        this.isEmpty = true;
     }
 }

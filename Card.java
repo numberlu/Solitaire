@@ -11,6 +11,7 @@ class Card extends Stack {
     public String position;
     public int col;
     public int row;
+    public char color;
 
     ImageIcon image;
 
@@ -42,6 +43,11 @@ class Card extends Stack {
     Card(int number, char symbol) {
         this.number = number;
         this.symbol = symbol;
+        if (symbol == 'h' || symbol == 'd') {
+            this.color = 'r';
+        } else {
+            this.color = 'b';
+        }
         this.directory = directory + ((number < 10) ? "0" + number + symbol + ".gif" 
             : "" + number + symbol + ".gif");
         this.image = new ImageIcon(directory);

@@ -43,7 +43,6 @@ class LaunchPage extends JFrame implements MouseInputListener{
         // Adding JLayeredPane into JFrame
         this.add(layeredPane);
 
-
         // Window setup
         this.setTitle("Solitaire");
         this.setSize(810, 700);
@@ -58,7 +57,6 @@ class LaunchPage extends JFrame implements MouseInputListener{
         // Window icon set up
         ImageIcon image = new ImageIcon("cards\\poker-cards.png");
         this.setIconImage(image.getImage());
-        
     }
 
     @Override
@@ -67,7 +65,7 @@ class LaunchPage extends JFrame implements MouseInputListener{
             waste.addCardToWaste();
         }
         if (e.getSource() == waste) {
-            //check for possible moves if so waste isEmpty = true
+            //removes card from waste if it is possible
             waste.removeCardFromWaste();
         }
     }

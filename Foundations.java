@@ -22,6 +22,9 @@ public class Foundations extends JPanel {
     JLabel diamondsLabel = new JLabel(new ImageIcon("cards\\fpBase04.gif"));
     ArrayList<Card> cardsInFoundation = new ArrayList<>();
 
+    /**
+     * Set the foundations.
+     */
     public Foundations() {
         // Settings for foundations
         this.setBackground(backgroundColor);
@@ -30,6 +33,9 @@ public class Foundations extends JPanel {
         updateFoundations();
     }
 
+    /**
+     * (Re-)paint the foundations.
+     */
     void updateFoundations() {
         this.add(spadesLabel);
         this.add(heartsLabel);
@@ -37,6 +43,11 @@ public class Foundations extends JPanel {
         this.add(diamondsLabel);
     }
 
+    /**
+     * Moves card (from Tableau or Waste) to correct pile in foundations.
+     * @param card card that is moved
+     * @return whether the card was moved
+     */
     public boolean addCardToFoundation(Card card) {
         boolean hasCardMoved = false;
 
