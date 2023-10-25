@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.LayoutManager;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,25 +12,77 @@ import javax.swing.JPanel;
 public class Foundations extends JPanel {
     
     public Color backgroundColor = new Color(14, 120, 71);
-    public Card card;
+    int spades = 0;
+    int hearts = 0;
+    int diamonds = 0;
+    int clubs = 0;
+    JLabel spadesLabel = new JLabel(new ImageIcon("cards\\fpBase01.gif"));
+    JLabel heartsLabel = new JLabel(new ImageIcon("cards\\fpBase02.gif"));
+    JLabel clubsLabel = new JLabel(new ImageIcon("cards\\fpBase03.gif"));
+    JLabel diamondsLabel = new JLabel(new ImageIcon("cards\\fpBase04.gif"));
+    ArrayList<Card> cardsInFoundation = new ArrayList<>();
 
     public Foundations() {
-        card = new Card();
-
         // Settings for foundations
         this.setBackground(backgroundColor);
-        this.setBounds(315, 0, 595, 150);
-        this.setLayout((LayoutManager) new FlowLayout(FlowLayout.CENTER, 20, 20));
-        this.initializeFoundation();
+        this.setBounds(365, 0, 545, 150);
+        this.setLayout((LayoutManager) new FlowLayout(FlowLayout.LEADING, 20, 20));
+        updateFoundations();
     }
 
-    void initializeFoundation() {
+    void updateFoundations() {
+        this.add(spadesLabel);
+        this.add(heartsLabel);
+        this.add(clubsLabel);
+        this.add(diamondsLabel);
+    }
 
-        for (int i = 1; i < 5; i++) {
-            card.number = i;
-            ImageIcon fdCard = card.getFoundations();
-            JLabel labelCard = new JLabel(fdCard);
-            this.add(labelCard);
+    public boolean addCardToFoundation(Card card) {
+        boolean hasCardMoved = false;
+
+        switch (card.symbol) {
+            case ('s'): {
+                if (card.number == spades + 1) {
+                    this.spadesLabel.setIcon(card.image);
+                    this.spades++;
+                    hasCardMoved = true;
+                }
+                break;
+            }
+            case ('h'): {
+                if (card.number == hearts + 1) {
+                    this.heartsLabel.setIcon(card.image);
+                    this.hearts++;
+                    hasCardMoved = true;
+                }
+                break;
+            }
+            case ('c'): {
+                if (card.number == clubs + 1) {
+                    this.clubsLabel.setIcon(card.image);
+                    this.clubs++;
+                    hasCardMoved = true;
+                }
+                break;
+            }
+            case ('d'): {
+                if (card.number == diamonds + 1) {
+                    this.diamondsLabel.setIcon(card.image);
+                    this.diamonds++;
+                    hasCardMoved = true;
+                }
+                break;
+            }
+            default:
+                break;
         }
+        updateFoundations();
+
+        if (hasCardMoved) {
+            cardsInFoundation.add(card);
+        }
+
+        return hasCardMoved;
     }
+    
 }

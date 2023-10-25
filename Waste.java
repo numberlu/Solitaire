@@ -12,13 +12,15 @@ public class Waste extends JPanel{
     int index = 1;
     ArrayList<Card> cards = new ArrayList<>();
     Tableau tableau;
+    Foundations foundations;
     
-    Waste(ArrayList<Card> cards, Tableau tableau) {
+    Waste(ArrayList<Card> cards, Tableau tableau, Foundations foundations) {
         this.tableau = tableau;
         this.cards = cards;
+        this.foundations = foundations;
         this.add(card);
         this.setBackground(backgroundColor);
-        this.setBounds(137, 0, 315 - 137, 150);
+        this.setBounds(137, 0, 228, 150);
         this.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 20));
     }
     
@@ -26,7 +28,6 @@ public class Waste extends JPanel{
      * Method checks if the waste is empty and adds a card.
      */
     void addCardToWaste() {
-        System.out.println("hi");
         //if the card was removed, we remove that card(index) and stack moves up by one card
         if (isEmpty) { 
             index--;
@@ -41,7 +42,15 @@ public class Waste extends JPanel{
         index++;
     }
 
+    /**
+     * When waste is clicked, it moves the card to foundations, tableau or does nothing.
+     * For now, moving to foundations and doing nothing is realized.
+     */
     void removeCardFromWaste() {
-        this.isEmpty = true;
+        if (foundations.addCardToFoundation(cardInWaste)) {
+            this.card.setIcon(cardInWaste.getCardBottom());
+            this.cards.remove(cardInWaste);
+            this.isEmpty = true;
+        }
     }
 }

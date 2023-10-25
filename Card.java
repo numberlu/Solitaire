@@ -1,19 +1,33 @@
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 class Card extends Stack {
     public int number;
     public char symbol;
     public boolean isFaceUp;
     public String directory = "cards\\";
+    public JLabel label;
+    public String position;
+    public int col;
+    public int row;
 
     ImageIcon image;
 
     Card() { 
         this.createShuffledCardStack();
-        // this.directory = directory + ((number < 10) ? "0" + number + symbol + ".gif" 
-        //     : "" + number + symbol + ".gif");
-        // this.image = new ImageIcon(directory);
+    }
+
+    /**
+     * For FoundationsTests.java.
+     * @param symbol type of card
+     * @param number numerical value of the card (1 - ace, 11 - jeff, 12 - queen, 13 - king)
+     * @param image front side of the card
+     */
+    Card(char symbol, int number, ImageIcon image) {
+        this.symbol = symbol;
+        this.number = number;
+        this.image = image;
     }
 
     /**
@@ -31,6 +45,7 @@ class Card extends Stack {
         this.directory = directory + ((number < 10) ? "0" + number + symbol + ".gif" 
             : "" + number + symbol + ".gif");
         this.image = new ImageIcon(directory);
+        this.label = new JLabel(image);
     }
 
     public int getNumber() {
@@ -49,16 +64,18 @@ class Card extends Stack {
         return directory;
     }
 
-    public ImageIcon getFoundations() {
-        ImageIcon fDownCard = new ImageIcon("cards\\fpBase0" + number + ".gif");
-        return fDownCard;
-    }
-
+    /**
+     * gets empty card.
+     */
     public ImageIcon getCardBottom() {
-        ImageIcon fBottomCard = new ImageIcon("cards\\bottom01.gif");
+        ImageIcon fBottomCard = new ImageIcon("cards\\empty.png");
         return fBottomCard;
     }
 
+    /**
+     * Method returns the front of the card using directory.
+     * @return image of the front of the card
+     */
     public ImageIcon getFaceUp() {
         // Multiple vertical distance with lastCardNum to get pos of card and put it in col
         ImageIcon fUpCard = new ImageIcon(this.directory);
@@ -66,6 +83,10 @@ class Card extends Stack {
 
     }
     
+    /**
+     * Method returns the back of the card (black) if the card is facedown.
+     * @return back of the card.
+     */
     public ImageIcon getFaceDown() {
         ImageIcon fDownCard = new ImageIcon(new ImageIcon("cards\\card back black.png")
             .getImage().getScaledInstance(73, 97, Image.SCALE_SMOOTH));

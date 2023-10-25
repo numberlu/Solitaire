@@ -12,12 +12,14 @@ class LaunchPage extends JFrame implements MouseInputListener{
     // Cards already shuffled
     public Card cards = new Card();
 
-    // Tableau and deck take arguments of shuffled cards respectively
-    public Tableau tableau = new Tableau(cards.tabStack);
-    public Waste waste = new Waste(cards.deckStack, tableau);
-    public Deck deck = new Deck();
-
     public Foundations foundations = new Foundations();
+
+    // Tableau and waste take arguments of shuffled cards respectively
+    public Tableau tableau = new Tableau(cards.tabStack, foundations);
+    public Waste waste = new Waste(cards.deckStack, tableau, foundations);
+    
+    public Deck deck = new Deck();
+    
     // JlayeredPane for tableau, foundation, deck and waste
     public JLayeredPane layeredPane = new JLayeredPane();
 
@@ -31,9 +33,11 @@ class LaunchPage extends JFrame implements MouseInputListener{
         
         // Adding the classes into JlayeredPane so that can overlap each other
         layeredPane.add(tableau);
+        foundations.addMouseListener(this);
         layeredPane.add(foundations);
         deck.addMouseListener(this);
         layeredPane.add(deck);
+        waste.addMouseListener(this);
         layeredPane.add(waste);
 
         // Adding JLayeredPane into JFrame
@@ -66,41 +70,29 @@ class LaunchPage extends JFrame implements MouseInputListener{
             //check for possible moves if so waste isEmpty = true
             waste.removeCardFromWaste();
         }
-
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-       
+    public void mousePressed(MouseEvent e) {  
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'mouseDragged'");
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'mouseMoved'");
     }
 }
