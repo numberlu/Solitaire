@@ -10,13 +10,13 @@ class Tableau extends JPanel implements MouseInputListener{
 
     Foundations foundations;
 
-    // For layering
-    public JLayeredPane layeredPane = new JLayeredPane();
-
     ArrayList<Card> cards;
 
     // All stacks of tableau will be in tabStacks
     ArrayList<ArrayList<Card>> tabStacks = new ArrayList<>();
+
+    // Stores the 
+    ArrayList<JLayeredPane> tabLayeredPanes;
 
     /**
      * Tableau board.
@@ -29,7 +29,17 @@ class Tableau extends JPanel implements MouseInputListener{
         this.foundations = foundations;
 
         // Setting bounds for JLayeredPane
-        layeredPane.setBounds(0, 0, 810, 550);
+        this.tabLayeredPanes = new ArrayList<>();
+
+        // Initialize JLayeredPane for each column
+        for (int i = 0; i < 7; i++) {
+            JLayeredPane tabLayeredPane = new JLayeredPane();
+            tabLayeredPane.setBounds(0, 0, 810, 550);
+            tabLayeredPanes.add(tabLayeredPane);
+            this.add(tabLayeredPane); // Add each JLayeredPane to the Tableau panel
+        }
+
+        // this.initializeTableuStack();
 
         this.setBackground(backgroundColor);
         this.setBounds(0, 150, 810, 550);
@@ -88,11 +98,12 @@ class Tableau extends JPanel implements MouseInputListener{
         card.label.addMouseListener(this);
 
         // Adding each card into JlayeredPane with priority (2nd argument)
-        layeredPane.add(card.label, Integer.valueOf(row));
-        //System.out.println("rank" + row);
+        JLayeredPane tabLayeredPane = tabLayeredPanes.get(col);
+        tabLayeredPane.add(card.label);
+        tabLayeredPane.setLayer(card.label, tabLayeredPane.getComponentCount() - 1);
 
         // Adding layeredPane into JPanel for display
-        this.add(layeredPane);
+        this.add(tabLayeredPane);
     }
 
     /**
@@ -111,8 +122,9 @@ class Tableau extends JPanel implements MouseInputListener{
         // empty.setBounds(((73 * col) + (35 * (col + 1))),
         //             row * 35, 73,  97);
         // layeredPane.add(empty, Integer.valueOf(row));
-        // this.add(layeredPane);
-        this.layeredPane.remove(cards.get(index).label);
+        // this.add(layeredPane);\
+
+        this.tabLayeredPanes.remove(cards.get(index).label);
     }
 
     /**
@@ -122,24 +134,32 @@ class Tableau extends JPanel implements MouseInputListener{
      */
     boolean addCardToTableau(Card card) {
         for (int col = 0; col < 7; col++) {
+            // Position of last card on that column
             int last = this.tabStacks.get(col).size() - 1;
-            System.out.println(tabStacks.get(col).get(last).directory);
+            
 
+            // Checks if card can be placed
             if (canPlace(tabStacks.get(col).get(last), card)) {
                 //updates card's position
-                card.col = tabStacks.get(col).get(last).col;
-                card.row = tabStacks.get(col).get(last).row + 1;
 
+                // New Column
+                card.col = tabStacks.get(col).get(last).col;
+
+                card.row = tabStacks.get(col).get(last).row + 1;
+                
                 //places the card on the board
                 setCardOnTableau(card, card.col, card.row);
 
                 //adding the card to the organized arraylist based on column
                 tabStacks.get(col).add(last + 1, card);
+
                 
                 //adding to all of the cards that are on the tableau
                 cards.add(card);
+
                 return true;
             }
+            // System.out.println(tabStacks.get(1).size());
         }
 
         return false;
@@ -168,13 +188,17 @@ class Tableau extends JPanel implements MouseInputListener{
             //checks if it got the right card and if it's face up
             if (e.getSource() == cards.get(index).label 
                             && cards.get(index).isFaceUp) {
+
                 if (foundations.addCardToFoundation(cards.get(index))) {
                     removeCardFromTableau(cards.get(index).row,
                          cards.get(index).col, index);
+
                 } else if (addCardToTableau(cards.get(index))) {
-                    System.out.println("column " + cards.get(index).col + "  and row " 
+                    System.out.println("column " + cards.get(index).col + " and row " 
                         + cards.get(index).row);
-                   //gotta remove it from the previous location
+
+                        
+                    // Gotta remove it from the previous location
                 }
             }
         }
