@@ -36,11 +36,13 @@ class Stack {
         // Shuffling cards for tableau
         for (int i = 0; i < 28; i++) {
             this.tabStack.add(this.cardStack.get(i));
+            this.tabStack.get(i).position = "tableau";
         }
 
         // Shuffling cards for deck
         for (int j = 28; j < this.cardStack.size(); j++) {
             this.deckStack.add(this.cardStack.get(j));
+            this.tabStack.get(j - 28).position = "deck";
         }
     }
 
