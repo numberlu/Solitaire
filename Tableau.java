@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
+import javax.sound.midi.SysexMessage;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
@@ -117,15 +119,28 @@ class Tableau extends JPanel implements MouseInputListener{
      * @param col column
      * @param index index
      */
-    void removeCardFromTableau(int row, int col, int index) {
-        // JLabel empty = new JLabel(new ImageIcon("cards\\emptycard."));
-        // empty.setBounds(((73 * col) + (35 * (col + 1))),
-        //             row * 35, 73,  97);
-        // layeredPane.add(empty, Integer.valueOf(row));
-        // this.add(layeredPane);\
+    void removeCardFromTableau(int row, int col, Card card) {
+        this.tabLayeredPanes.get(col).remove(card.label);
 
-        this.tabLayeredPanes.remove(cards.get(index).label);
+        this.tabLayeredPanes.get(col).repaint();
+        this.tabLayeredPanes.get(col).revalidate();
     }
+
+    void faceUpPreviousCard(int col,int row, int index) {
+        // Index of previous card
+        // int index = this.tabStacks.get(col).size();
+        row -= 1;
+
+        tabStacks.get(col).get(row).label.setIcon(cards.get(index - 1).getFaceUp());
+        tabStacks.get(col).get(row).isFaceUp = true;
+        cards.get(index - 1).isFaceUp = true;
+        
+    }
+
+    // Make a method that checks the cards above a certain
+
+    // Make king move to empty stack
+
 
     /**
      * Method moves the card on the tableau from waste (or the tableau NOT REALIZED).
@@ -176,6 +191,7 @@ class Tableau extends JPanel implements MouseInputListener{
     boolean canPlace(Card cardToPlace, Card toPlaceOnto) {
         if (cardToPlace.number == (toPlaceOnto.number + 1) 
             && cardToPlace.color != toPlaceOnto.color) {
+            System.out.println("True");
             return true;
         }
         return false;
@@ -185,17 +201,32 @@ class Tableau extends JPanel implements MouseInputListener{
     public void mouseClicked(MouseEvent e) {
         //finds which card i'm caressing with my cursor
         for (int index = 0; index < cards.size(); index++) {
+            
             //checks if it got the right card and if it's face up
             if (e.getSource() == cards.get(index).label 
                             && cards.get(index).isFaceUp) {
+                
+                
+                int previousCol = cards.get(index).col;
+                int previousRow = cards.get(index).row;
+                Card previousCard = cards.get(index);
 
                 if (foundations.addCardToFoundation(cards.get(index))) {
                     removeCardFromTableau(cards.get(index).row,
-                         cards.get(index).col, index);
+                         cards.get(index).col, previousCard);
+
+                    faceUpPreviousCard(previousCol, previousRow, index);
+                    break;
 
                 } else if (addCardToTableau(cards.get(index))) {
-                    System.out.println("column " + cards.get(index).col + " and row " 
-                        + cards.get(index).row);
+                    // Faces up previous card
+                    faceUpPreviousCard(previousCol, previousRow, index);
+                    // setCardOnTableau(previousCard, previousCol, previousRow - 1);
+
+                    System.out.println("column " + previousCol + " and row " 
+                        + previousRow);
+                    
+                    break;
 
                         
                     // Gotta remove it from the previous location
@@ -228,5 +259,3 @@ class Tableau extends JPanel implements MouseInputListener{
     public void mouseMoved(MouseEvent e) {
     }
 }
-
-
