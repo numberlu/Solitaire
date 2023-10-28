@@ -1,3 +1,5 @@
+HIGH PRIORITY
+
 NAME: Rendering start board 
     DEMO: 
     -> After pressing 'Start Game', a board appears with the tableau - 7 columns of cards overlayed on each other, all 
@@ -5,7 +7,7 @@ NAME: Rendering start board
 
     NOTES:
     -> Using JFrame to create the window where the game will be played in.
-    -> Using the class "Point" to use the x and y coordinates to position the cards and such.
+    -> Creating different classes for different parts of solitaire such as a class for the tableau and a class for the foundation
     -> Using the image class from Swing to set the image on every face up cards on the board (Cards will be stored in a separate file)
 
 NAME: Stacking cards on the foundations
@@ -16,30 +18,16 @@ NAME: Stacking cards on the foundations
     NOTES:
     -> When stacking the cards into foundations, check using if-statements what is the last stacked item in the stack foundation.
     -> If the card is valid to be stacked, using Swing,  move the card from the tableau stack they were from to the foundation, removing the card
-    from the tableau stack it came from.
-    -> (We could make it a preferance to transfer cards to foundations if possible)
-    
+    from the tableau stack it came from.    
 
 NAME: Revealing cards in the stock
     DEMO:
-    -> Press the stock to reveal next card in the stock
+    -> Press the stock in the deck to reveal next card in the stock
     -> The revealed card gets put into waste
 
     NOTES:
+    -> We would allow the cards to cycle through the waste one by one once all cards have been revealed
     -> Since the stock is a STACK of cards, we could implement the functions of a STACK. 
-    -> Using "isEmpty" to check whether there are cards in the stock
-    -> If it is empty, move the cards from the waste back to the stock inorder of a STACK
-    -> If it isn't empty, remove the card from the stock and add it to the waste STACK
-
-
-NAME: Stacking (overlaying) the cards in the waste from the stock
-    DEMO:
-    -> The waste is overlayed one (face up) card at a time
-    -> There are no more than three cards at a time in the waste
-
-    NOTES:
-    -> Using OverlapLayout (I'm no longer sure about this lol)
-
 
 NAME: Clicking the stacks
     DEMO:
@@ -52,6 +40,15 @@ NAME: Clicking the stacks
     -> Using "MouseEvent" to get the current position of the mouse when the LMB is pressed
     -> Checks the position of the mouse and see where that card belongs to and perform necessary actions depending whichever class it belongs to
 
+NAME: Initialising the tableau stack
+    DEMO: 
+    -> When initialising, each column on the tableau have different number of cards initially.
+        -> So the first column will 1 card , second column will have 2 and so on respectively.
+        -> The top card of the colmn stack will be faced up and the rest of the cards will be faced down
+
+    NOTES:
+    -> Add a mouselistener to each card on the tableau so that they can act independently
+    -> Using a double if-statement to create the column stack respectively to the number of cards they have
 
 NAME: Revealing cards on the tableau
     DEMO: 
@@ -62,35 +59,33 @@ NAME: Revealing cards on the tableau
     -> Using a boolean variable, we check whether the card is at the top of the stack. If so,
     we will set the boolean variable to true and show the card face up if the boolean variable is true.
 
-
-NAME: Not allowing stacks starting with other cards than king to be moved to an empty spot
-    DEMO:
-    -> If there is an empty column in the tableau, only allow (stacks starting with) the KING card to be placed before any other card
-    -> All other stacks go back to their previous place
-
-    NOTES:
-    -> Check the tableau stack using the isEmpty method, if so, allow a king card to be moved there if the user wishes to do so.
-
-
-NAME: Moving stack of cards 
-    DEMO: 
-    -> A stack of cards is considered a moveable stack when it's cards go in a numerical order and the cards are constantly 
-    altering between red and black
-
-    NOTES: 
-    -> Check whether this condition is met with isInNumericalOrder() and isAlternating().
-
-
-NAME: Clicking on a card (or a stack) that can be moved to another stack
+NAME: Clicking on a card on the tableau that can be moved to another tableau stack
     DEMO:
     -> Cards can only be moved to another tableau stack if:
         -> The top card of the tableau stack they are moving to has the opposite colour
         -> The number of the card is 1 less than the card on the top of the tableau stack
 
     NOTES:
-    -> Using the functionality of a stack, only move the card to the other tableau stack if the conditions are met.
-    -> The other tableau stack must not be empty, unless a king is being moved.
+    -> The other tableau stack must not be empty, unless a king is being moved. ???
+    -> Check whether the stack that the card is moving to has a number less than the card itself AND it has a different colour
+    -> We will assign each card a color and a number in the Card class
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+MID PRIORITY
+NAME: Moving stack of cards 
+    DEMO: 
+    -> A stack of cards is considered a moveable stack when it's cards go in a numerical order and the cards are constantly 
+    altering between red and black
+
+    NOTES: 
+    -> Check whether there are cards above the FACED UP card (using isFaceUp method) and if so, using a for loop and move the card to the other
+    tableau column stack.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+LOW PRIORITY:
 
 NAME: Restacking the cards on the waste back to the stock
     DEMO:
@@ -101,30 +96,6 @@ NAME: Restacking the cards on the waste back to the stock
     -> Using pop the cards of the waste stack and push the card into the stock.
     -> Keep on checking if the waste stack is empty, if so, cards have successfully been moved back into the stock.
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-EXTRA:
-NAME: Point system (Stacking more cards on waste from stock takes points away)
-    DEMO:
-    -> Moving cards back from the waste to the stock deducts 1 point
-    -> Moving a card to the foundation from any stack adds 5 points
-    -> Display (top middle or terminal?) and change the points when specific actions occur
-
-    NOTES:
-    -> Check which action has taken place (Where the mouse clicked and if conditions are met) and change points accordingly
-
-
-NAME: Undo button for the last move
-    DEMO: 
-    -> Returns the lastly moved card (or the stack) to its previous position
-        -> From foundation to tableau/ waste
-        -> From one column of tableau to another
-        -> From waste to the stock
-
-    NOTES:
-    -> Keep records of one previous move to be able to reverse the move if the user chooses to.
-
-
 NAME: Allowing the (stacks starting with) king to be moved to an empty spot
     DEMO:
     -> If there are no cards in a tableau stack, a king can be moved to the empty tableau stack
@@ -133,16 +104,17 @@ NAME: Allowing the (stacks starting with) king to be moved to an empty spot
     -> Check if tableau stack is empty, if so move king to empty tableau stack
     -> (We could make it a preferance to transfer cards to foundations if possible)
 
-NAME: Autostacking when stock and waste are empty, and the cards on the tableau are all face up
-    DEMO: 
-    -> ඞ kinda sus ngl
-    -> When the conditions are met a button appears close to the waste that offers to 'Solve' and stack all the remaining 
-    cards not in the foundation.
+????
+NAME: Not allowing stacks starting with other cards than king to be moved to an empty spot
+    DEMO:
+    -> If there is an empty column in the tableau, only allow (stacks starting with) the KING card to be placed before any other card
+    -> All other stacks go back to their previous place
 
     NOTES:
-    -> Do we need an animation for that? 
-    // (I think animation might be too extra maybe we could say that if waste and )
+    -> Check the tableau stack using the isEmpty method, if so, allow a king card to be moved there if the user wishes to do so.
+????
 
+ඞ
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 LEARNING GOALS:
