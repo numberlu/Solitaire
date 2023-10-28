@@ -20,7 +20,7 @@ class Card extends Stack {
     }
 
     /**
-     * For FoundationsTests.java.
+     * For FoundationsTests.java and as the first card in the column.
      * @param symbol type of card
      * @param number numerical value of the card (1 - ace, 11 - jeff, 12 - queen, 13 - king)
      * @param image front side of the card
@@ -29,6 +29,7 @@ class Card extends Stack {
         this.symbol = symbol;
         this.number = number;
         this.image = image;
+        this.label = new JLabel(image);
     }
 
     /**

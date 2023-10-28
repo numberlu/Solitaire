@@ -9,6 +9,13 @@
             "name": "Solitaire",
             "request": "launch",
             "mainClass": "Solitaire",
+            "projectName": "Solitaire_de5ce921"
+        },
+        {
+            "type": "java",
+            "name": "Solitaire",
+            "request": "launch",
+            "mainClass": "Solitaire",
             "projectName": "Solitaire-1_5baf1e3c"
         },
         {
