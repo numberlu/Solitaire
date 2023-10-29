@@ -10,3 +10,5 @@ When there is no face-up card left on a pile, the top face-down card is turned u
 Only a king may fill an open space in the layout. The player turns up cards from the top of the deck. The card may be used for building on the piles, if possible, played on a foundation.
 
 (source: https://bicyclecards.com/how-to-play/klondike)
+
+GitHub link: https://github.com/numberlu/Solitaire
