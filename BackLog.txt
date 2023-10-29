@@ -1,128 +1,204 @@
 HIGH PRIORITY
-
-NAME: Rendering start board 
-    DEMO: 
-    -> After pressing 'Start Game', a board appears with the tableau - 7 columns of cards overlayed on each other, all 
-    face down except the last ones, the stock - all cards face down stacked on top of each other, and the foundations - empty slots
-
-    NOTES:
-    -> Using JFrame to create the window where the game will be played in.
-    -> Creating different classes for different parts of solitaire such as a class for the tableau and a class for the foundation
-    -> Using the image class from Swing to set the image on every face up cards on the board (Cards will be stored in a separate file)
-
-NAME: Stacking cards on the foundations
-    DEMO: 
-    -> If foundation stack is empty, only allow ACE cards to be stacked, taken from tableau
-    -> The cards can only be stacked in numerical order after the ACE and jeff, queen and king after
-
-    NOTES:
-    -> When stacking the cards into foundations, check using if-statements what is the last stacked item in the stack foundation.
-    -> If the card is valid to be stacked, using Swing,  move the card from the tableau stack they were from to the foundation, removing the card
-    from the tableau stack it came from.    
-
-NAME: Revealing cards in the stock
+NAME: Rendering Start Board
     DEMO:
-    -> Press the stock in the deck to reveal next card in the stock
-    -> The revealed card gets put into waste
+    -> Deck, Tableau, Waste, and Foundation.
+    -> A board appears with:
+        -> Tableau: 
+            -> 7 columns of cards overlayed on each other
+            -> All face down except the last ones, 
+        -> Stock:
+            -> All cards face down stacked on top of each other
+        -> Foundations:
+            -> Empty slots showing faded images of their suits
+        -> Deck:
+            -> Where Stock and Waste resides
+        -> Waste:
+            -> Empty slot
+            -> Where cards from stock go when drawn
 
     NOTES:
-    -> We would allow the cards to cycle through the waste one by one once all cards have been revealed
-    -> Since the stock is a STACK of cards, we could implement the functions of a STACK. 
+    -> Window Resolution would be 810x700 and using JFrame to display the window
+    -> Using JPanel to display:
+        -> The position of the deck will be on the top left
+        -> The position of the foundation will be on the top right
+        -> The position of the tableau will be the remaining panel
+    -> Creating different classes for different parts of solitaire such 
+        as a class for the tableau and a class for the foundation
 
-NAME: Clicking the stacks
-    DEMO:
-    -> Clicking a card will allow the card to perform its functionalities such as:
-        -> Clicking a card on the stock will move the card to the waste
-        -> Clicking the card on a tableau stack will either move it to another tableau stack (if conditions met),
-        move the card to the foundation (if conditions met) or do nothing
 
-    NOTES:
-    -> Using "MouseEvent" to get the current position of the mouse when the LMB is pressed
-    -> Checks the position of the mouse and see where that card belongs to and perform necessary actions depending whichever class it belongs to
-
-NAME: Initialising the tableau stack
+NAME: Initialisation of Tableau and its stacks
     DEMO: 
-    -> When initialising, each column on the tableau have different number of cards initially.
-        -> So the first column will 1 card , second column will have 2 and so on respectively.
-        -> The top card of the colmn stack will be faced up and the rest of the cards will be faced down
+    -> When initializing, each column on the tableau has a different number of cards initially.
+        -> So the first column will have 1 card, the second column will have 2, and so on respectively.
+        -> The top card of the column stack will be faced up and the rest of the cards will be faced down
 
     NOTES:
-    -> Add a mouselistener to each card on the tableau so that they can act independently
+    -> Add a mouseListener to each card on the tableau so that they can act independently
+    -> Add each card to a "LayeredPane" for that one column and add those "LayeredPane" into an ArrayList of "LayeredPane"
     -> Using a double if-statement to create the column stack respectively to the number of cards they have
 
-NAME: Revealing cards on the tableau
-    DEMO: 
-    -> After the card or the stack of cards is moved to another place, 
-    the top of the tableau stack (faced down) will be faced up, showing its contents
-
-    NOTES:
-    -> Using a boolean variable, we check whether the card is at the top of the stack. If so,
-    we will set the boolean variable to true and show the card face up if the boolean variable is true.
-
-NAME: Clicking on a card on the tableau that can be moved to another tableau stack
+NAME: Moving a card from deck to waste
     DEMO:
-    -> Cards can only be moved to another tableau stack if:
-        -> The top card of the tableau stack they are moving to has the opposite colour
-        -> The number of the card is 1 less than the card on the top of the tableau stack
+    -> Cards can be drawn from the deck to the waste by clicking on the face-down card
+    -> The card will then be displayed on the waste, faced up
 
     NOTES:
-    -> The other tableau stack must not be empty, unless a king is being moved. ???
-    -> Check whether the stack that the card is moving to has a number less than the card itself AND it has a different colour
-    -> We will assign each card a color and a number in the Card class
+    -> Each card will be given "addMouseListener" so that it can be checked whether that card has been clicked
+    -> If all cards have been drawn, no cards will be displayed
+
+NAME: Moving a card from waste to tableau (Following number and color)
+    DEMO:
+    -> Clicking the card from the waste will allow the card to move to the tableau if the conditions are met.
+    -> Conditions:
+        -> Opposite color
+        -> Number less than the number of the card itself
+
+    NOTES:
+    -> Checking through the tableau whether there is a number less than the card itself AND it has the opposite color (also isFaceUp = true)
+    -> If conditions are not met, don't move the card at all. 
+    -> If it is, move the card to the respective tableau column and remove the card display from the waste
+    -> Give the card an "addMouseListener" so that the "MouseEvent" will be able to pick up the "source" of the mouse click
+    and where it belongs
+
+NAME: Moving a card from waste to foundation (Following number and color)
+    DEMO:
+    -> Clicking on the card will also allow the card to move from the waste to the foundation if conditions are met.
+    -> Conditions:
+        -> Same suit
+        -> Number more than the number of the card itself
+        -> If an ace card is moving, allow the card to move to the suit represented in the foundation
+
+    NOTES:
+    -> Checking in the foundation whether it is empty. 
+    -> If so, allow the ace card to move there. 
+    -> If not then check the suit and number of the card
+    -> If the card is moved, remove the display of the card and move it to the foundation face-up
+    -> If the card is not moved, do nothing
+
+NAME: Moving a card from 1 tableau column to another
+    DEMO:
+    -> Clicking and checking whether the card from other columns has met the conditions
+    -> Conditions:
+        -> Opposite color
+        -> Number less than the number of the card itself by one
+
+    NOTES:
+    -> If the conditions are met, move the card to the respective column
+    -> If not do nothing
+    -> Once the card is moved, the card previously will be faced up and be given an "addMouseListener"
+
+NAME: Moving a card from tableau to foundation
+    DEMO:
+    -> Clicking and checking whether moving the card has met the conditions
+    -> Conditions:
+        -> Same suit
+        -> Number more than the number of the card itself
+        -> If an ace card is moving, allow the card to move to the suit represented in the foundation
+
+    NOTES:
+    -> Move the card to the foundation if conditions have all been met and remove the display of the card
+    -> The card will be faced up in the tableau
+    -> Remove that card from the "LayeredPane" and repaint the "LayeredPane" after removing the card so that it would
+    update the GUI
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+MID PRIORITY:
 
-MID PRIORITY
-NAME: Moving stack of cards 
-    DEMO: 
-    -> A stack of cards is considered a moveable stack when it's cards go in a numerical order and the cards are constantly 
-    altering between red and black
+NAME: Moving a stack of cards from 1 tableau column to another
+    DEMO:
+    -> Similar conditions to moving a single card from 1 tableau column to another
+    -> Move all the cards under it that is face up to the new tableau column
 
-    NOTES: 
-    -> Check whether there are cards above the FACED UP card (using isFaceUp method) and if so, using a for loop and move the card to the other
-    tableau column stack.
+    NOTES:
+    -> If the conditions are met, move the cards 1 by 1 using a for loop and the same method as moving the card from 1 tableau 
+    to another
 
+NAME: Facing up cards after moving a card on top of it
+    DEMO:
+    -> Once a card is moved to either the foundation or to another tableau column, the card under it will be faced up
 
+    NOTES:
+    -> Check the row before the card that was moved and set the "isFaceUp" to true
+    -> Display the card with its image respectively and add an "addMouseListener" to that card so it is interactable
+
+NAME: Allowing the king to move to an empty column in tableau (From waste and tableau)
+    DEMO:
+    -> If there is an empty column in the tableau, allow ONLY the king card to move to that empty column
+
+    NOTES:
+    -> From waste:
+        -> Have a method in the waste class that checks whether there is an empty column in the tableau.
+        -> If there is, give the king card an "addMouseListener" so that it is interactable, and move the card to the empty tableau column
+    -> From tableau:
+        -> Check whether the column stack is empty. If so, allow the king card to move to that empty tableau column
+        -> Any cards under the king card will also be moved 
+
+NAME: Moving a stack of cards from 1 tableau column to another
+    DEMO:
+    -> Similar conditions to moving a single card from 1 tableau column to another
+    -> Move all the cards on top of the clicked card to the new tableau column
+
+    NOTES:
+    -> If the conditions are met, move the cards 1 by 1 using a for loop and the same method as moving the card from 1 tableau 
+    to another
+
+NAME: Stacking cards on deck (Stock)
+    DEMO:
+    -> Once the cards have been shuffled and distributed to the waste, the cards will be stacked on top
+    of each other and faced down
+
+    NOTES:
+    -> All the cards will have a boolean attribute "isFaceUp" and initially, all will be set to false
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 LOW PRIORITY:
 
-NAME: Restacking the cards on the waste back to the stock
+
+NAME: Shuffle cards and distribute them respectively
     DEMO:
-    -> If the stock is empty and the user wants to reveal more cards on the stock, move the cards back into the stock from the top
-    until the waste doesn't have any cards left.
+    -> Cards will be shuffled and distributed accordingly to the deck and the tableau
 
     NOTES:
-    -> Using pop the cards of the waste stack and push the card into the stock.
-    -> Keep on checking if the waste stack is empty, if so, cards have successfully been moved back into the stock.
+    -> The tableau will have a total of 28 shuffled cards
+    -> The remaining cards (24 shuffled cards) will be distributed to the stock and faced down
+    -> This will be using the ".shuffle" method as it is already built-in.
+    -> Each card will be assigned a "color" and a "number" so that conditions for moving the card can be checked
+    -> Number of cards:
+        -> Ace: 1
+        -> Number corresponds to the actual number
+        -> Jeff: 11
+        -> Queen: 12
+        -> King: 13
 
-NAME: Allowing the (stacks starting with) king to be moved to an empty spot
+NAME: Not allowing a card that has cards stacked on it to move to the foundation
     DEMO:
-    -> If there are no cards in a tableau stack, a king can be moved to the empty tableau stack
+    -> If there are cards under the cards that are clicked AND can be moved to the foundation, don't allow it
 
     NOTES:
-    -> Check if tableau stack is empty, if so move king to empty tableau stack
-    -> (We could make it a preferance to transfer cards to foundations if possible)
+    -> Check if there is a card in the row below the card that was clicked.
+    -> If there is, restrict it to only allow to move to different tableau columns
+    -> Error exceptions might need to be used when checking the row below as sometimes there will not be any cards there.
 
-????
-NAME: Not allowing stacks starting with other cards than king to be moved to an empty spot
+NAME: Displaying images taken from another file
     DEMO:
-    -> If there is an empty column in the tableau, only allow (stacks starting with) the KING card to be placed before any other card
-    -> All other stacks go back to their previous place
+    -> Store images of cards and such in a separate file and render them in the code
 
     NOTES:
-    -> Check the tableau stack using the isEmpty method, if so, allow a king card to be moved there if the user wishes to do so.
-????
+    -> Using "ImageIcon" and "JLabel" from the swing library so that they be rendered and displayed in the GUI
+    -> Cards in the Tableau will be added into a "LayeredPane"
 
-ඞ
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 LEARNING GOALS:
 
--> Git?
--> Test Driven devevlopment? (Just like previous assignments)
+-> Github usage
+
+-> Test Driven development
+    -> Test for foundation, Stack and Tableau
+    
 -> Diving deeper with Swing usage
 
+ඞ
 
 
 
