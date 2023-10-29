@@ -47,24 +47,38 @@ public class Waste extends JPanel{
      * For now, moving to foundations and doing nothing is realized.
      */
     void removeCardFromWaste() {
-        if (cardInWaste.number == 13) {
+        for (int col = 0; col < 7; col++) {
             if (tableau.kingToEmpty(cardInWaste)) {
+                // King moved to an empty column in the tableau
+                tableau.setCardOnTableau(cardInWaste, col, 0);
+                tableau.tabStacks.get(col).add(cardInWaste);
+                cardInWaste.col = col;
+                cardInWaste.row = 0;
+                
+                // Make the card interactable (add mouse listener)
+                cardInWaste.label.addMouseListener(tableau);
+                
+                // Update GUI
+                tableau.tabLayeredPanes.get(col).repaint();
+                
+                // Remove the card from the waste
                 this.card.setIcon(cardInWaste.getCardBottom());
                 this.cards.remove(cardInWaste);
                 this.isEmpty = true;
-                cardInWaste.isFaceUp = true;
-                tableau.setCardOnTableau(cardInWaste, cardInWaste.col, 0);
-
+                
+                // Exit the method after moving the card
                 return;
             }
         }
-        if (!foundations.addCardToFoundation(cardInWaste) 
+
+        if (!foundations.addCardToFoundation(cardInWaste)
                 && !tableau.addCardToTableau(cardInWaste))  {
             return;
         }
+
+        cardInWaste.label.addMouseListener(tableau);
         this.card.setIcon(cardInWaste.getCardBottom());
         this.cards.remove(cardInWaste);
         this.isEmpty = true;
-
     }
 }

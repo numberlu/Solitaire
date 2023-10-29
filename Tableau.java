@@ -133,7 +133,6 @@ class Tableau extends JPanel implements MouseInputListener{
             tabStacks.get(col).get(row).isFaceUp = true;
             cards.get(index).isFaceUp = true; //change this TODO
         }
-        
     }
 
     // Make king move to empty stack
@@ -141,12 +140,7 @@ class Tableau extends JPanel implements MouseInputListener{
         // Check if the card is a king
         if (card.number == 13) {
             for (int col = 0; col < 7; col++) {
-                // Mainly for moving king from waste
-                card.col = col;
-
                 if ((this.tabStacks.get(col).size() == 0)) {
-                    // Move the king card to the empty spot in tableau
-                    addCardToTableau(card);
                     return true;
                 }
             }
@@ -166,11 +160,7 @@ class Tableau extends JPanel implements MouseInputListener{
             // Position of last card on that column
             int last = this.tabStacks.get(col).size() - 1;
 
-
-            // Error if king was moved
-            // System.out.println(canPlace(tabStacks.get(col).get(last), card));
             if (last >= 0 && canPlace(tabStacks.get(col).get(last), card)) {
-                System.out.println(last);
                 //updates card's position
 
                 // New Column
@@ -192,25 +182,6 @@ class Tableau extends JPanel implements MouseInputListener{
                 return true;
                 // when king is moving
             }
-
-
-            // } else if (last == -1 && card.number == 13) {
-            //     // If the column is empty and the card is a king, move the card
-            //     // to the empty column in the tableau
-            //     card.col = col;
-            //     card.row = 0;
-    
-            //     //places the card on the board
-            //     setCardOnTableau(card, card.col, card.row);
-    
-            //     //adding the card to the organized arraylist based on column
-            //     tabStacks.get(col).add(card);
-    
-            //     //adding to all of the cards that are on the tableau
-            //     cards.add(card);
-    
-            //     return true;
-            // }
         } 
 
         return false;
@@ -281,6 +252,16 @@ class Tableau extends JPanel implements MouseInputListener{
         }
         return false;
     }
+    boolean checkCardUnder(int col, int row) {
+        try {
+            if (this.tabStacks.get(col).get(row - 1).isFaceUp) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -295,9 +276,12 @@ class Tableau extends JPanel implements MouseInputListener{
                 int currentCol = cards.get(index).col;
                 int currentRow = cards.get(index).row;
                 Card currentCard = cards.get(index);
+
+                currentCard.label.addMouseListener(this);
                 
                 System.out.println(cards.get(index).directory);
-                if (foundations.addCardToFoundation(cards.get(index))) {
+                if (foundations.addCardToFoundation(cards.get(index)) 
+                    && !checkCardUnder(currentCol, currentRow)) {
                     removeCardFromTableau(cards.get(index).row,
                          cards.get(index).col, currentCard);
 
@@ -311,12 +295,12 @@ class Tableau extends JPanel implements MouseInputListener{
                 } else if (kingToEmpty(currentCard)) {
                     // System.out.println("King moved");
                 }
+                this.tabLayeredPanes.get(currentCol).repaint();
+                this.tabLayeredPanes.get(currentCol).revalidate();
             }
         }
+        
     }
-
-    
-    
 
     @Override
     public void mousePressed(MouseEvent e) {
