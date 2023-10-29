@@ -266,7 +266,7 @@ class Tableau extends JPanel implements MouseInputListener{
                         tabStacks.get(col).remove(card);
                         
                         // Update the cards list
-                        cards.remove(card);
+                        //cards.remove(card);
                     }
                     return true; // Exit the loop once the cards are moved
                 }
