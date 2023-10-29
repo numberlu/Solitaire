@@ -48,6 +48,27 @@ class Tableau extends JPanel implements MouseInputListener {
     }
 
     
+    Tableau(ArrayList<Card> cards) {
+        this.cards = cards;
+        // Setting bounds for JLayeredPane
+        this.tabLayeredPanes = new ArrayList<>();
+
+        // Initialize JLayeredPane for each column
+        for (int i = 0; i < 7; i++) {
+            JLayeredPane tabLayeredPane = new JLayeredPane();
+            tabLayeredPane.setBounds(0, 0, 810, 550);
+            tabLayeredPanes.add(tabLayeredPane);
+            this.add(tabLayeredPane); // Add each JLayeredPane to the Tableau panel
+        }
+
+        this.setBackground(backgroundColor);
+        this.setBounds(0, 150, 810, 550);
+
+        this.setLayout(null);
+        this.initializeTableuStack();
+    }
+
+    
     /**.
      * Initialises the tableau stack when the game is first launched
      */
