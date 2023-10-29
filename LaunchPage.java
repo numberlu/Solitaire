@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.event.MouseInputListener;
 
-class LaunchPage extends JFrame implements MouseInputListener{
+class LaunchPage extends JFrame implements MouseInputListener {
     public Color backgroundColor = new Color(21, 88, 67);
 
     // Creating objects
@@ -13,12 +13,12 @@ class LaunchPage extends JFrame implements MouseInputListener{
     public Card cards = new Card();
 
     public Foundations foundations = new Foundations();
+    public Deck deck = new Deck();
 
     // Tableau and waste take arguments of shuffled cards respectively
     public Tableau tableau = new Tableau(cards.tabStack, foundations);
-    public Waste waste = new Waste(cards.deckStack, tableau, foundations);
+    public Waste waste = new Waste(cards.deckStack, tableau, foundations, deck);
     
-    public Deck deck = new Deck();
     
     // JlayeredPane for tableau, foundation, deck and waste
     public JLayeredPane layeredPane = new JLayeredPane();

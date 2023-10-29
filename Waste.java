@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Waste extends JPanel{
+/**
+ * Class deals with intializing and actions happening in waste.
+ */
+public class Waste extends JPanel {
     public Color backgroundColor = new Color(14, 120, 71);
     Card cardInWaste;
     JLabel card = new JLabel();
@@ -13,15 +16,28 @@ public class Waste extends JPanel{
     ArrayList<Card> cards = new ArrayList<>();
     Tableau tableau;
     Foundations foundations;
+    Deck deck;
     
-    Waste(ArrayList<Card> cards, Tableau tableau, Foundations foundations) {
+    /**
+     * Initializes waste to be used in LaunchPage.
+     * @param cards cards in the deck
+     * @param tableau the board of the game
+     * @param foundations the piles 
+     * @param deck deck
+     */
+    Waste(ArrayList<Card> cards, Tableau tableau, Foundations foundations, Deck deck) {
         this.tableau = tableau;
         this.cards = cards;
+        for (int index = 0; index < cards.size(); index++) {
+            this.cards.get(index).isFaceUp = true;
+        }
         this.foundations = foundations;
+        this.deck = deck;
         this.add(card);
         this.setBackground(backgroundColor);
         this.setBounds(137, 0, 228, 150);
         this.setLayout(new FlowLayout(FlowLayout.LEADING, 20, 20));
+
     }
     
     /**
@@ -32,9 +48,12 @@ public class Waste extends JPanel{
         if (isEmpty) { 
             index--;
         }
-        //makes sure that we can reuse the deck after we reach its end
-        if (index == cards.size()) {
+
+        if (index == cards.size() - 1) {
+            deck.endOfDeck();
+        } else if (index == cards.size()) {
             index = 0;
+            deck.startOfDeck();
         }
         cardInWaste = cards.get(index);
         this.card.setIcon(cardInWaste.getFaceUp());
@@ -47,24 +66,38 @@ public class Waste extends JPanel{
      * For now, moving to foundations and doing nothing is realized.
      */
     void removeCardFromWaste() {
-        if (cardInWaste.number == 13) {
-            if (tableau.kingToEmpty(cardInWaste)) {
+        for (int col = 0; col < 7; col++) {
+            if (tableau.kingToEmpty(cardInWaste, col)) {
+                // King moved to an empty column in the tableau
+                tableau.setCardOnTableau(cardInWaste, col, 0);
+                tableau.tabStacks.get(col).add(cardInWaste);
+                cardInWaste.col = col;
+                cardInWaste.row = 0;
+                
+                // Make the card interactable (add mouse listener)
+                cardInWaste.label.addMouseListener(tableau);
+                
+                // Update GUI
+                tableau.tabLayeredPanes.get(col).repaint();
+                
+                // Remove the card from the waste
                 this.card.setIcon(cardInWaste.getCardBottom());
                 this.cards.remove(cardInWaste);
                 this.isEmpty = true;
-                cardInWaste.isFaceUp = true;
-                tableau.setCardOnTableau(cardInWaste, cardInWaste.col, 0);
-
+                
+                // Exit the method after moving the card
                 return;
             }
         }
-        if (!foundations.addCardToFoundation(cardInWaste) 
+
+        if (!foundations.addCardToFoundation(cardInWaste)
                 && !tableau.addCardToTableau(cardInWaste))  {
             return;
         }
+
+        cardInWaste.label.addMouseListener(tableau);
         this.card.setIcon(cardInWaste.getCardBottom());
         this.cards.remove(cardInWaste);
         this.isEmpty = true;
-
     }
 }
