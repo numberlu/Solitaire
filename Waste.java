@@ -47,12 +47,24 @@ public class Waste extends JPanel{
      * For now, moving to foundations and doing nothing is realized.
      */
     void removeCardFromWaste() {
+        if (cardInWaste.number == 13) {
+            if (tableau.kingToEmpty(cardInWaste)) {
+                this.card.setIcon(cardInWaste.getCardBottom());
+                this.cards.remove(cardInWaste);
+                this.isEmpty = true;
+                cardInWaste.isFaceUp = true;
+                tableau.setCardOnTableau(cardInWaste, cardInWaste.col, 0);
+
+                return;
+            }
+        }
         if (!foundations.addCardToFoundation(cardInWaste) 
-                && !tableau.addCardToTableau(cardInWaste)) {
+                && !tableau.addCardToTableau(cardInWaste))  {
             return;
         }
         this.card.setIcon(cardInWaste.getCardBottom());
         this.cards.remove(cardInWaste);
         this.isEmpty = true;
+
     }
 }
