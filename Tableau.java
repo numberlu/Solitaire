@@ -216,8 +216,8 @@ class Tableau extends JPanel implements MouseInputListener {
      * @param toPlaceOnto the place we are moving other card
      * @return whether the card was moved (or not)
      */
-    boolean canPlace(Card cardToPlace, Card toPlaceOnto) {
-        if (cardToPlace.number == (toPlaceOnto.number + 1) 
+    boolean canPlace(Card toPlaceOnto, Card cardToPlace) {
+        if (cardToPlace.number == (toPlaceOnto.number - 1) 
             && cardToPlace.color != toPlaceOnto.color) {
             return true;
         } else if (cardToPlace.number == 13 && toPlaceOnto.number == 0) {
@@ -254,7 +254,7 @@ class Tableau extends JPanel implements MouseInputListener {
     
                 // Check if the cards can be placed in the target column
                 if ((last >= 0 && canPlace(tabStacks.get(targetCol).get(last), cardsToMove.get(0)))
-                        || (last == -1 && canPlace(cardsToMove.get(0), empty))) {
+                        || (last == -1 && canPlace(empty, cardsToMove.get(0)))) {
                     // Move the cards to the target column
                     for (Card card : cardsToMove) {
                         // Update the card's position
