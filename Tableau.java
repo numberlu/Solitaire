@@ -48,6 +48,27 @@ class Tableau extends JPanel implements MouseInputListener {
     }
 
     
+    Tableau(ArrayList<Card> cards) {
+        this.cards = cards;
+        // Setting bounds for JLayeredPane
+        this.tabLayeredPanes = new ArrayList<>();
+
+        // Initialize JLayeredPane for each column
+        for (int i = 0; i < 7; i++) {
+            JLayeredPane tabLayeredPane = new JLayeredPane();
+            tabLayeredPane.setBounds(0, 0, 810, 550);
+            tabLayeredPanes.add(tabLayeredPane);
+            this.add(tabLayeredPane); // Add each JLayeredPane to the Tableau panel
+        }
+
+        this.setBackground(backgroundColor);
+        this.setBounds(0, 150, 810, 550);
+
+        this.setLayout(null);
+        this.initializeTableuStack();
+    }
+
+    
     /**.
      * Initialises the tableau stack when the game is first launched
      */
@@ -195,8 +216,8 @@ class Tableau extends JPanel implements MouseInputListener {
      * @param toPlaceOnto the place we are moving other card
      * @return whether the card was moved (or not)
      */
-    boolean canPlace(Card cardToPlace, Card toPlaceOnto) {
-        if (cardToPlace.number == (toPlaceOnto.number + 1) 
+    boolean canPlace(Card toPlaceOnto, Card cardToPlace) {
+        if (cardToPlace.number == (toPlaceOnto.number - 1) 
             && cardToPlace.color != toPlaceOnto.color) {
             return true;
         } else if (cardToPlace.number == 13 && toPlaceOnto.number == 0) {
@@ -233,7 +254,7 @@ class Tableau extends JPanel implements MouseInputListener {
     
                 // Check if the cards can be placed in the target column
                 if ((last >= 0 && canPlace(tabStacks.get(targetCol).get(last), cardsToMove.get(0)))
-                        || (last == -1 && canPlace(cardsToMove.get(0), empty))) {
+                        || (last == -1 && canPlace(empty, cardsToMove.get(0)))) {
                     // Move the cards to the target column
                     for (Card card : cardsToMove) {
                         // Update the card's position
