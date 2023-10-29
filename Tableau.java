@@ -98,7 +98,7 @@ class Tableau extends JPanel implements MouseInputListener{
         JLayeredPane tabLayeredPane = tabLayeredPanes.get(col);
         tabLayeredPane.add(card.label);
         tabLayeredPane.setLayer(card.label, tabLayeredPane.getComponentCount() - 1);
-        System.out.println("Component count (level) = " + (tabLayeredPane.getComponentCount() - 1));
+        // System.out.println("Component count (level) = " + (tabLayeredPane.getComponentCount() - 1));
         
         // Adding layeredPane into JPanel for display
         this.add(tabLayeredPane);
@@ -118,9 +118,9 @@ class Tableau extends JPanel implements MouseInputListener{
         this.tabLayeredPanes.get(col).revalidate();
 
         for (int i = 0; i < 7; i++) {
-            System.out.println("size of column" + (i + 1) + " is " + tabStacks.get(i).size());
+            // System.out.println("size of column" + (i + 1) + " is " + tabStacks.get(i).size());
         }
-        System.out.println();
+        // System.out.println();
     }
 
     void faceUpPreviousCard(int col,int row, int index) {
@@ -136,9 +136,24 @@ class Tableau extends JPanel implements MouseInputListener{
         
     }
 
-    // Make a method that checks the cards above a certain
-
     // Make king move to empty stack
+    boolean kingToEmpty(Card card) {
+        // Check if the card is a king
+        if (card.number == 13) {
+            for (int col = 0; col < 7; col++) {
+                // Mainly for moving king from waste
+                card.col = col;
+
+                if ((this.tabStacks.get(col).size() == 0)) {
+                    // Move the king card to the empty spot in tableau
+                    addCardToTableau(card);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
 
     /**
@@ -152,15 +167,17 @@ class Tableau extends JPanel implements MouseInputListener{
             int last = this.tabStacks.get(col).size() - 1;
 
 
-            // Checks if card can be placed
+            // Error if king was moved
+            // System.out.println(canPlace(tabStacks.get(col).get(last), card));
             if (last >= 0 && canPlace(tabStacks.get(col).get(last), card)) {
+                System.out.println(last);
                 //updates card's position
 
                 // New Column
                 card.col = tabStacks.get(col).get(last).col;
 
                 card.row = tabStacks.get(col).get(last).row + 1;
-                System.out.println("row to be placed on: " + card.row);
+                // System.out.println("row to be placed on: " + card.row);
                 
                 //places the card on the board
                 setCardOnTableau(card, card.col, card.row);
@@ -173,8 +190,28 @@ class Tableau extends JPanel implements MouseInputListener{
                 cards.add(card);
 
                 return true;
+                // when king is moving
             }
-        }
+
+
+            // } else if (last == -1 && card.number == 13) {
+            //     // If the column is empty and the card is a king, move the card
+            //     // to the empty column in the tableau
+            //     card.col = col;
+            //     card.row = 0;
+    
+            //     //places the card on the board
+            //     setCardOnTableau(card, card.col, card.row);
+    
+            //     //adding the card to the organized arraylist based on column
+            //     tabStacks.get(col).add(card);
+    
+            //     //adding to all of the cards that are on the tableau
+            //     cards.add(card);
+    
+            //     return true;
+            // }
+        } 
 
         return false;
     }
@@ -195,36 +232,6 @@ class Tableau extends JPanel implements MouseInputListener{
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        System.out.println(e.getSource());
-        //finds which card i'm caressing with my cursor
-        for (int index = 0; index < cards.size(); index++) {
-            
-            //checks if it got the right card and if it's face up
-            if (e.getSource() == cards.get(index).label 
-                            && cards.get(index).isFaceUp) {
-                
-                int previousCol = cards.get(index).col;
-                int previousRow = cards.get(index).row;
-                Card previousCard = cards.get(index);
-                
-                System.out.println(cards.get(index).directory);
-                if (foundations.addCardToFoundation(cards.get(index))) {
-                    removeCardFromTableau(cards.get(index).row,
-                         cards.get(index).col, previousCard);
-
-                    faceUpPreviousCard(previousCol, previousRow, index);
-                    break;
-
-                } else if (moveFaceUpCards(previousCol, previousRow)) {
-                    // Faces up previous card
-                    faceUpPreviousCard(previousCol, previousRow, index);
-                }
-            }
-        }
     }
 
     public boolean moveFaceUpCards(int col, int row) {
@@ -274,6 +281,41 @@ class Tableau extends JPanel implements MouseInputListener{
         }
         return false;
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println(e.getSource());
+        //finds which card i'm caressing with my cursor
+        for (int index = 0; index < cards.size(); index++) {
+            
+            //checks if it got the right card and if it's face up
+            if (e.getSource() == cards.get(index).label 
+                            && cards.get(index).isFaceUp) {
+                
+                int currentCol = cards.get(index).col;
+                int currentRow = cards.get(index).row;
+                Card currentCard = cards.get(index);
+                
+                System.out.println(cards.get(index).directory);
+                if (foundations.addCardToFoundation(cards.get(index))) {
+                    removeCardFromTableau(cards.get(index).row,
+                         cards.get(index).col, currentCard);
+
+                    faceUpPreviousCard(currentCol, currentRow, index);
+                    break;
+
+                } else if (moveFaceUpCards(currentCol, currentRow)) {
+                    // Faces up previous card
+                    faceUpPreviousCard(currentCol, currentRow, index);
+                    
+                } else if (kingToEmpty(currentCard)) {
+                    // System.out.println("King moved");
+                }
+            }
+        }
+    }
+
+    
     
 
     @Override
