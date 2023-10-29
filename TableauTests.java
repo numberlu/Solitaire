@@ -60,8 +60,6 @@ public class TableauTests {
         int col = tableau.tabStacks.get(0).get(1).col;
         int row = tableau.tabStacks.get(0).get(1).row;
 
-        System.out.println("col = " + col + ", row = " + row);
-
         ArrayList<Card> columnStack = tableau.tabStacks.get(col);
 
         // Verify that the card is in the correct position and face-up
@@ -143,10 +141,6 @@ public class TableauTests {
         testCards.get(3).isFaceUp = true;
         testCards.get(4).isFaceUp = true;
         testCards.get(5).isFaceUp = true;
-        
-        System.out.println("col = " + testCards.get(3).col + " , row = " + testCards.get(3).row);
-        System.out.println("col = " + testCards.get(4).col + " , row = " + testCards.get(4).row);
-        System.out.println("col = " + testCards.get(5).col + " , row = " + testCards.get(5).row);
         
         // Check if there's a face-up card on top of card2 (in column 0, row 1)
         boolean hasFaceUpCardOver = tableau.checkCardOver(2, 0);
